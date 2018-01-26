@@ -23,7 +23,7 @@ public class Exercise3Test extends ClassicOnlineStore {
         /**
          * Count how many items there are in {@link Customer.wantToBuy} using {@link Stream#count}
          */
-        long sum = 0L;
+        long sum = customerList.stream().map(Customer::getWantToBuy).count();
 
         assertThat(sum, is(32L));
     }
@@ -36,7 +36,7 @@ public class Exercise3Test extends ClassicOnlineStore {
          * Find the richest customer's budget by using {@link Stream#max} and {@link Comparator#naturalOrder}
          * Don't use {@link Stream#sorted}
          */
-        Comparator<Integer> comparator = null;
+        Comparator<Integer> comparator = null; //Comparator.comparingInt(Customer::getBudget).(Comparator.naturalOrder());
         Optional<Integer> richestCustomer = null;
 
         assertThat(comparator.getClass().getSimpleName(), is("NaturalOrderComparator"));
@@ -51,8 +51,8 @@ public class Exercise3Test extends ClassicOnlineStore {
          * Find the youngest customer by using {@link Stream#min}
          * Don't use {@link Stream#sorted}
          */
-        Comparator<Customer> comparator = null;
-        Optional<Customer> youngestCustomer = null;
+        Comparator<Customer> comparator = Comparator.comparingInt(Customer::getAge);
+        Optional<Customer> youngestCustomer = customerList.stream().min(comparator);
 
         assertThat(youngestCustomer.get(), is(customerList.get(8)));
     }
